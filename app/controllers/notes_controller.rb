@@ -27,8 +27,10 @@ class NotesController < ApplicationController
         note=Note.find(params[:id])
   
         tags = params[:tags].map{|tag|
+            if tag.length >= 3 
             tag = Tag.find_or_create_by(name:tag)
             NoteTag.find_or_create_by(tag_id: tag.id, note_id: note.id)
+            end
         }
         
         note.update(title: params[:title],
